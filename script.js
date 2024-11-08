@@ -1,3 +1,4 @@
+// List of words
 const words = [
 	"perplex ",
 	"facetious ",
@@ -110,7 +111,10 @@ const words = [
 	"verbatim ",
 	"scourge ",
 ];
+// Index to keep track of where we are in the random words.
+let currentIndex = 0;
 
+// Function to get random words from wordsArray list.
 let getwords = function () {
 	let randomWords = [];
 	while (randomWords.length < 3) {
@@ -128,13 +132,23 @@ let getwords = function () {
 	wordDisplay.textContent = wordlist;
 	console.log(typeof wordlist);
 };
+// Run function to always start with some words.
 getwords();
 
-let currentIndex = 0;
+// Functionality to gain user's input and compare against the words.
 document.addEventListener("keydown", function (e) {
 	let userinput = e.key;
 	console.log("User input:", userinput);
 
+	if (userinput === "Backspace") {
+		console.log("Backspace pressed");
+		if (currentIndex > 0) {
+			currentIndex--; // Move back one letter if not at the beginning
+			console.log("Moved back to previous letter:", wordlist[currentIndex]);
+		} else {
+			console.log("Already at the start, can't go back further.");
+		}
+	}
 	if (userinput === wordlist[currentIndex]) {
 		console.log("Correct letter, onto the next");
 		currentIndex++;
@@ -142,6 +156,9 @@ document.addEventListener("keydown", function (e) {
 
 		if (currentIndex >= wordlist.length) {
 			console.log("Victory!");
+			currentIndex = 0;
+			console.log(currentIndex);
+			getwords();
 		}
 	} else {
 		console.log(
